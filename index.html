@@ -125,12 +125,12 @@ function showTip(msg) {
 
 /* ===== 数据（区域统一为「未知」） ===== */
 const agents = [
-  { name: "澜",   qq: "1707879407", region: "未知", link: "https://qm.qq.com/q/PSpBu3Nn20" },
+  { name: "糟糕明天会更好", qq: "3831838251", region: "未知", link: "https://qm.qq.com/q/qBbQej0sf0" },
   { name: "xxxx", qq: "123456",    region: "未知", link: "" },
   { name: "xxxx", qq: "123456",    region: "未知", link: "" },
   { name: "xxxx", qq: "123456",    region: "未知", link: "" },
   { name: "xxxx", qq: "123456",    region: "未知", link: "" },
-  { name: "xxxx", qq: "123456",    region: "未知", link: "" }
+  { name: "备用", qq: "—",         region: "未知", link: "" }
 ];
 
 let sortKey = "", sortAsc = true;
@@ -139,13 +139,16 @@ function render(list) {
   const tbody = document.getElementById("tbody");
   tbody.innerHTML = list.map((a, i) => {
     const muted = i === 0 ? "" : "muted";
-    const btn = a.qq
+    const btn = a.qq && a.qq !== "—"
       ? `<button class="contact-btn" onclick="openQQ('${a.qq}','${a.link || ''}')">立即联系</button>`
       : '<span style="color:#cfd8d4">—</span>';
+    const groupBtn = a.group
+      ? `<a class="contact-btn" href="${a.group}" target="_blank" rel="noopener" style="margin-left:6px;">加入群聊</a>`
+      : '';
     return `<tr class="${muted}">
       <td>${a.name}</td><td>${a.qq}</td>
       <td><span class="tag">${a.region}</span></td>
-      <td>${btn}</td></tr>`;
+      <td>${btn}${groupBtn}</td></tr>`;
   }).join("");
   document.getElementById("count").textContent = `共 ${list.length} 条记录`;
 }
